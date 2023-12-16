@@ -1,0 +1,30 @@
+[
+  {
+    "geographyId": "world",
+    "datasourceId": "world",
+    "display": "World",
+    "groups": [],
+    "precalc": false
+  },
+  {
+    "geographyId": "eez",
+    "datasourceId": "global-eez-mr-v12",
+    "display": "Dutch Exclusive Economic Zone",
+    "propertyFilter": {
+      "property": "GEONAME",
+      "values": [
+        "Dutch Exclusive Economic Zone"
+      ]
+    },
+    "bboxFilter": [
+      2.539333055369639,
+      51.33015811470568,
+      7.210279465125666,
+      55.765000000350085
+    ],
+    "groups": [
+      "default-boundary"
+    ],
+    "precalc": true
+  }
+]

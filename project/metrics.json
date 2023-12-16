@@ -1,0 +1,28 @@
+[
+    {
+        "metricId": "boundaryAreaOverlap",
+        "type": "areaOverlap",
+        "classes": [
+            {
+                "classId": "eez",
+                "display": "EEZ",
+                "datasourceId": "global-eez-mr-v12",
+                "objectiveId": "eez",
+                "layerId": ""
+            }
+        ]
+    },
+    {
+        "metricId": "windparkCost",
+        "type": "valueOverlap",
+        "classes": [
+            {
+                "classId": "depth",
+                "display": "Depth",
+                "datasourceId": "bathy",
+                "objectiveId": "eez",
+                "layerId": ""
+            }
+        ]
+    }
+]

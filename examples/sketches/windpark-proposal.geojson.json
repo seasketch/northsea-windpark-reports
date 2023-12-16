@@ -1,0 +1,74 @@
+{
+    "id": 23769,
+    "bbox": [
+        3.6828084,
+        53.532383,
+        5.161102,
+        54.200054
+    ],
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    3.682808425,
+                    54.089516025
+                ],
+                [
+                    3.798136272,
+                    53.532381465
+                ],
+                [
+                    5.161101734,
+                    53.619533549
+                ],
+                [
+                    4.972383439,
+                    54.200055607
+                ],
+                [
+                    3.682808425,
+                    54.089516025
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "6147": "windpark-proposal",
+        "6148": "North Sea Foundation",
+        "id": "23769",
+        "name": "windpark-proposal",
+        "postId": null,
+        "userId": "128",
+        "comments": null,
+        "userSlug": "Peter",
+        "createdAt": "2023-12-15T21:53:49.402829+00:00",
+        "updatedAt": "2023-12-15T21:53:49.402829+00:00",
+        "designation": "North Sea Foundation",
+        "collectionId": null,
+        "isCollection": false,
+        "sharedInForum": false,
+        "sketchClassId": "717",
+        "userAttributes": [
+            {
+                "label": "Affiliation",
+                "value": "North Sea Foundation",
+                "exportId": "designation",
+                "fieldType": "ComboBox",
+                "valueLabel": "North Sea Foundation",
+                "formElementId": 6148,
+                "alternateLanguages": {}
+            },
+            {
+                "label": "Comments",
+                "value": null,
+                "exportId": "comments",
+                "fieldType": "TextArea",
+                "valueLabel": null,
+                "formElementId": 6149,
+                "alternateLanguages": {}
+            }
+        ]
+    }
+}

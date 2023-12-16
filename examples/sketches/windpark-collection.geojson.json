@@ -1,0 +1,169 @@
+{
+    "id": 23771,
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "id": 23769,
+            "bbox": [
+                3.6828084,
+                53.532383,
+                5.161102,
+                54.200054
+            ],
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            3.682808425,
+                            54.089516025
+                        ],
+                        [
+                            3.798136272,
+                            53.532381465
+                        ],
+                        [
+                            5.161101734,
+                            53.619533549
+                        ],
+                        [
+                            4.972383439,
+                            54.200055607
+                        ],
+                        [
+                            3.682808425,
+                            54.089516025
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "6147": "windpark-proposal",
+                "6148": "North Sea Foundation",
+                "id": "23769",
+                "name": "windpark-proposal",
+                "postId": null,
+                "userId": "128",
+                "comments": null,
+                "userSlug": "Peter",
+                "createdAt": "2023-12-15T21:53:49.402829+00:00",
+                "updatedAt": "2023-12-15T23:51:08.299947+00:00",
+                "designation": "North Sea Foundation",
+                "collectionId": "23771",
+                "isCollection": false,
+                "sharedInForum": false,
+                "sketchClassId": "717",
+                "userAttributes": [
+                    {
+                        "label": "Affiliation",
+                        "value": "North Sea Foundation",
+                        "exportId": "designation",
+                        "fieldType": "ComboBox",
+                        "valueLabel": "North Sea Foundation",
+                        "formElementId": 6148,
+                        "alternateLanguages": {}
+                    },
+                    {
+                        "label": "Comments",
+                        "value": null,
+                        "exportId": "comments",
+                        "fieldType": "TextArea",
+                        "valueLabel": null,
+                        "formElementId": 6149,
+                        "alternateLanguages": {}
+                    }
+                ]
+            }
+        },
+        {
+            "id": 23770,
+            "bbox": [
+                3.5615702,
+                54.620335,
+                4.337412,
+                55.13904
+            ],
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            3.561570075,
+                            55.043044825
+                        ],
+                        [
+                            3.70835097,
+                            54.620335145
+                        ],
+                        [
+                            4.337411953,
+                            54.74761296
+                        ],
+                        [
+                            4.190631057,
+                            55.13904351
+                        ],
+                        [
+                            3.561570075,
+                            55.043044825
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "6147": "windpark-proposal-2",
+                "6148": "North Sea Foundation",
+                "id": "23770",
+                "name": "windpark-proposal-2",
+                "postId": null,
+                "userId": "128",
+                "comments": null,
+                "userSlug": "Peter",
+                "createdAt": "2023-12-15T23:50:20.395695+00:00",
+                "updatedAt": "2023-12-15T23:51:09.642709+00:00",
+                "designation": "North Sea Foundation",
+                "collectionId": "23771",
+                "isCollection": false,
+                "sharedInForum": false,
+                "sketchClassId": "717",
+                "userAttributes": [
+                    {
+                        "label": "Affiliation",
+                        "value": "North Sea Foundation",
+                        "exportId": "designation",
+                        "fieldType": "ComboBox",
+                        "valueLabel": "North Sea Foundation",
+                        "formElementId": 6148,
+                        "alternateLanguages": {}
+                    },
+                    {
+                        "label": "Comments",
+                        "value": null,
+                        "exportId": "comments",
+                        "fieldType": "TextArea",
+                        "valueLabel": null,
+                        "formElementId": 6149,
+                        "alternateLanguages": {}
+                    }
+                ]
+            }
+        }
+    ],
+    "properties": {
+        "6150": "windpark-collection",
+        "id": "23771",
+        "name": "windpark-collection",
+        "postId": null,
+        "userId": "128",
+        "userSlug": "Peter",
+        "createdAt": "2023-12-15T23:51:05.855559+00:00",
+        "updatedAt": "2023-12-15T23:51:09.642709+00:00",
+        "collectionId": null,
+        "isCollection": true,
+        "sharedInForum": false,
+        "sketchClassId": "718",
+        "userAttributes": null
+    }
+}
