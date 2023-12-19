@@ -17,7 +17,7 @@ import {
 import { loadCog } from "@seasketch/geoprocessing/dataproviders";
 import project from "../../project";
 import { clipToGeography } from "../util/clipToGeography";
-import area from "@turf/area";
+import { overlapRasterWindpark } from "../../scripts/overlapRasterWindpark";
 
 const metricGroup = project.getMetricGroup("windparkCost");
 
@@ -42,21 +42,20 @@ export async function windparkCost(
           project.getInternalRasterDatasourceById(curClass.datasourceId)
         )}`;
         const raster = await loadCog(url);
-        let overlapResult = await overlapRaster(
+        let overlapResult = await overlapRasterWindpark(
           metricGroup.metricId,
           raster,
           finalSketch
         );
-        const sketchArea = area(finalSketch);
-        const pixelArea = 362528.3;
-        const numberOfPixels = sketchArea / pixelArea;
 
         return overlapResult.map(
           (metrics): Metric => ({
             ...metrics,
             classId: curClass.classId,
             geographyId: curGeography.geographyId,
-            extra: { meanDepth: Math.abs(metrics.value) / numberOfPixels },
+            extra: {
+              sketchName: sketch.properties.name,
+            },
           })
         );
       })
