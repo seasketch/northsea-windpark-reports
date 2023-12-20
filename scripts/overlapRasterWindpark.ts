@@ -12,7 +12,7 @@ import { MultiPolygon } from "@turf/helpers";
 import turfArea from "@turf/area";
 
 // @ts-ignore
-import { Georaster, getSum } from "geoblaze";
+import { Georaster, sum } from "geoblaze";
 
 /**
  * Returns metrics representing sketch overlap with raster.
@@ -34,14 +34,14 @@ export async function overlapRasterWindpark(
 
   featureEach(sketch, async (feat) => {
     // accumulate geoblaze sum promises and features so we can create metrics later
-    sumPromises.push(getSum(raster, feat));
+    sumPromises.push(sum(raster, feat));
     sumFeatures.push(feat);
   });
 
   const bathyPixelArea = 362528.3;
   const turbineCost = 7;
 
-  const depthCost = (baseCost: number, depth: number) => {
+  const depthAdjust = (baseCost: number, depth: number) => {
     if (25 < Math.abs(depth) && Math.abs(depth) < 30) {
       return (baseCost / 100) * 10 + baseCost;
     }
@@ -64,6 +64,14 @@ export async function overlapRasterWindpark(
   // await results and create metrics
   let sketchMetrics: Metric[] = [];
   (await Promise.all(sumPromises)).forEach((curSum, index) => {
+    const sketchArea = turfArea(sketch);
+    const sketchAreaSqKm = sketchArea / 1000000;
+    const meanDepth = Math.abs(curSum) / (sketchArea / bathyPixelArea);
+    const numberOfTurbines = sketchArea / 1200000;
+    const baseCost = numberOfTurbines * turbineCost;
+    const depthCost = depthAdjust(baseCost, meanDepth);
+    const totalCost = depthCost + baseCost;
+
     sketchMetrics.push(
       createMetric({
         metricId,
@@ -71,8 +79,6 @@ export async function overlapRasterWindpark(
         value: curSum,
         extra: {
           sketchName: sumFeatures[index].properties.name,
-          // sum of bathy pixel values devided by number of pixels in sketch
-          meanDepth: Math.abs(curSum) / turfArea(sketch) / bathyPixelArea,
         },
       })
     );
@@ -80,7 +86,7 @@ export async function overlapRasterWindpark(
 
   if (isSketchCollection(sketch)) {
     // Push collection with accumulated sumValue
-    const collSumValue = await getSum(raster, sketch);
+    const collSumValue = await sum(raster, sketch);
     sketchMetrics.push(
       createMetric({
         metricId,
