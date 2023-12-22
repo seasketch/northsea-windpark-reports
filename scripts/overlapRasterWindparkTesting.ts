@@ -13,6 +13,7 @@ import turfArea from "@turf/area";
 
 // @ts-ignore
 import { Georaster, mean } from "geoblaze";
+import { MetricWithExtra } from "./MetricWithExtra";
 
 /**
  * Returns metrics representing sketch overlap with raster.
@@ -27,7 +28,7 @@ export async function overlapRasterWindpark(
   sketch:
     | Sketch<Polygon | MultiPolygon>
     | SketchCollection<Polygon | MultiPolygon>
-): Promise<Metric[]> {
+): Promise<MetricWithExtra[]> {
   // Get raster sum for each feature
   const meanPromises: Promise<number[]>[] = [];
   const meanFeatures: Sketch[] = [];
@@ -62,7 +63,7 @@ export async function overlapRasterWindpark(
   };
 
   // await results and create metrics
-  let sketchMetrics: Metric[] = [];
+  let sketchMetrics: MetricWithExtra[] = [];
   (await Promise.all(meanPromises)).forEach((curMean, index) => {
     const sketchArea = turfArea(meanFeatures[index]);
     const meanDepth = curMean[0];
@@ -71,47 +72,49 @@ export async function overlapRasterWindpark(
     const depthCost = depthAdjust(baseCost, meanDepth);
     const totalCost = depthCost + baseCost;
 
-    sketchMetrics.push(
-      createMetric({
-        metricId,
-        sketchId: meanFeatures[index].properties.id,
-        value: totalCost,
-        extra: {
-          sketchName: meanFeatures[index].properties.name,
-          sketchArea: sketchArea,
-          meanDepth: meanDepth,
-          numberOfTurbines: numberOfTurbines,
-          baseCost: baseCost,
-          depthCost: depthCost,
-        },
-      })
-    );
+    sketchMetrics.push({
+      metricId: metricId,
+      sketchId: meanFeatures[index].properties.id,
+      value: totalCost,
+      classId: null,
+      groupId: null,
+      geographyId: null,
+      extra: {
+        sketchName: meanFeatures[index].properties.name,
+        sketchArea: sketchArea,
+        meanDepth: meanDepth,
+        numberOfTurbines: numberOfTurbines,
+        baseCost: baseCost,
+        depthCost: depthCost,
+      },
+    });
   });
 
   if (isSketchCollection(sketch)) {
     // Push collection with accumulated sumValue
-    const meanDepth = (await mean(raster, sketch))[0];
+    const meanDepth = await mean(raster, sketch)[0];
     const sketchArea = turfArea(sketch);
     const numberOfTurbines = sketchArea / 1200000;
     const baseCost = numberOfTurbines * turbineCost;
     const depthCost = depthAdjust(baseCost, meanDepth);
     const totalCost = depthCost + baseCost;
-    sketchMetrics.push(
-      createMetric({
-        metricId,
-        sketchId: sketch.properties.id,
-        value: totalCost,
-        extra: {
-          sketchName: sketch.properties.name,
-          isCollection: true,
-          sketchArea: sketchArea,
-          meanDepth: meanDepth,
-          numberOfTurbines: numberOfTurbines,
-          baseCost: baseCost,
-          depthCost: depthCost,
-        },
-      })
-    );
+    sketchMetrics.push({
+      metricId: metricId,
+      sketchId: sketch.properties.id,
+      value: totalCost,
+      classId: null,
+      groupId: null,
+      geographyId: null,
+      extra: {
+        sketchName: sketch.properties.name,
+        isCollection: true,
+        sketchArea: sketchArea,
+        meanDepth: meanDepth,
+        numberOfTurbines: numberOfTurbines,
+        baseCost: baseCost,
+        depthCost: depthCost,
+      },
+    });
   }
 
   return sketchMetrics;

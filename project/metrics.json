@@ -17,8 +17,8 @@
         "type": "valueOverlap",
         "classes": [
             {
-                "classId": "depth",
-                "display": "Depth",
+                "classId": "cost",
+                "display": "Cost",
                 "datasourceId": "bathy",
                 "objectiveId": "eez",
                 "layerId": ""

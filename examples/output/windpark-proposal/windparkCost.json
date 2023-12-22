@@ -3,14 +3,17 @@
     {
       "geographyId": "eez",
       "metricId": "windparkCost",
-      "classId": "depth",
+      "classId": "cost",
       "sketchId": "23769",
       "groupId": null,
-      "value": [
-        -1954958.0198402405
-      ],
+      "value": 39361.49796239614,
       "extra": {
-        "sketchName": "windpark-proposal"
+        "sketchName": "windpark-proposal",
+        "sketchArea": 5623071137.485163,
+        "meanDepth": -39.16809624619812,
+        "numberOfTurbines": 4685.892614570969,
+        "baseCost": 32801.248301996784,
+        "depthCost": 6560.249660399357
       }
     }
   ],

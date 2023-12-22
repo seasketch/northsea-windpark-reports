@@ -2,76 +2,41 @@
   "metrics": [
     {
       "geographyId": "eez",
-      "metricId": "windparkCost",
-      "classId": "cost",
+      "metricId": "boundaryAreaOverlap",
+      "classId": "eez",
       "sketchId": "23769",
       "groupId": null,
-      "value": 39361.49796239614,
+      "value": 5623075120.489815,
       "extra": {
-        "sketchName": "windpark-proposal",
-        "sketchArea": 5623071137.485163,
-        "meanDepth": -39.16809624619812,
-        "numberOfTurbines": 4685.892614570969,
-        "baseCost": 32801.248301996784,
-        "depthCost": 6560.249660399357
+        "sketchName": "windpark-proposal"
       }
     },
     {
       "geographyId": "eez",
-      "metricId": "windparkCost",
-      "classId": "cost",
+      "metricId": "boundaryAreaOverlap",
+      "classId": "eez",
       "sketchId": "23770",
       "groupId": null,
-      "value": 14728.145839227385,
+      "value": 1942175192.268807,
       "extra": {
-        "sketchName": "windpark-proposal-2",
-        "sketchArea": 1942173077.7003145,
-        "meanDepth": -46.357552142573304,
-        "numberOfTurbines": 1618.477564750262,
-        "baseCost": 11329.342953251835,
-        "depthCost": 3398.8028859755505
+        "sketchName": "windpark-proposal-2"
       }
     },
     {
       "geographyId": "eez",
-      "metricId": "windparkCost",
-      "classId": "cost",
+      "metricId": "boundaryAreaOverlap",
+      "classId": "eez",
       "sketchId": "23771",
       "groupId": null,
-      "value": 57369.7686318232,
+      "value": 7565250312.758622,
       "extra": {
         "sketchName": "windpark-collection",
-        "isCollection": true,
-        "sketchArea": 7565244215.185477,
-        "meanDepth": -41.04816672695649,
-        "numberOfTurbines": 6304.370179321231,
-        "baseCost": 44130.59125524862,
-        "depthCost": 13239.177376574586
+        "isCollection": true
       }
     }
   ],
   "sketch": {
-    "properties": {
-      "6150": "windpark-collection",
-      "id": "23771",
-      "name": "windpark-collection",
-      "postId": null,
-      "userId": "128",
-      "userSlug": "Peter",
-      "createdAt": "2023-12-15T23:51:05.855559+00:00",
-      "updatedAt": "2023-12-15T23:51:09.642709+00:00",
-      "collectionId": null,
-      "isCollection": true,
-      "sharedInForum": false,
-      "sketchClassId": "718",
-      "userAttributes": null
-    },
-    "bbox": [
-      3.561570075,
-      53.532381465,
-      5.161101734,
-      55.13904351
-    ],
+    "id": 23771,
     "type": "FeatureCollection",
     "features": [
       {
@@ -170,6 +135,21 @@
         },
         "geometry": null
       }
-    ]
+    ],
+    "properties": {
+      "6150": "windpark-collection",
+      "id": "23771",
+      "name": "windpark-collection",
+      "postId": null,
+      "userId": "128",
+      "userSlug": "Peter",
+      "createdAt": "2023-12-15T23:51:05.855559+00:00",
+      "updatedAt": "2023-12-15T23:51:09.642709+00:00",
+      "collectionId": null,
+      "isCollection": true,
+      "sharedInForum": false,
+      "sketchClassId": "718",
+      "userAttributes": null
+    }
   }
 }

@@ -53,9 +53,6 @@ export async function windparkCost(
             ...metrics,
             classId: curClass.classId,
             geographyId: curGeography.geographyId,
-            extra: {
-              sketchName: sketch.properties.name,
-            },
           })
         );
       })
