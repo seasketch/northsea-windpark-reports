@@ -18,18 +18,8 @@ const MpaTabReport = () => {
   const [tab, setTab] = useState<string>(viabilityId);
   return (
     <>
-      <div style={{ marginTop: 5 }}>
-        <SegmentControl
-          value={tab}
-          onClick={(segment) => setTab(segment)}
-          segments={segments}
-        />
-      </div>
       <ReportPage hidden={!enableAllTabs && tab !== viabilityId}>
         <ViabilityPage />
-      </ReportPage>
-      <ReportPage hidden={!enableAllTabs && tab !== representationId}>
-        <RepresentationPage />
       </ReportPage>
     </>
   );

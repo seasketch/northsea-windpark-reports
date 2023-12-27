@@ -3,9 +3,11 @@ import {
   ClassTable,
   Collapse,
   KeySection,
+  Pill,
   ResultsCard,
   SketchClassTable,
   Table,
+  VerticalSpacer,
   useSketchProperties,
 } from "@seasketch/geoprocessing/client-ui";
 import {
@@ -21,6 +23,7 @@ import {
 } from "@seasketch/geoprocessing/client-core";
 import project from "../../project";
 import { Trans, useTranslation } from "react-i18next";
+import { WindparkTable } from "./WindparkTable";
 
 const Number = new Intl.NumberFormat("en", { style: "decimal" });
 
@@ -33,11 +36,6 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
   });
 
   const metricGroup = project.getMetricGroup("windparkCost", t);
-  // const precalcMetrics = project.getPrecalcMetrics(
-  //   metricGroup,
-  //   "sum",
-  //   curGeography.geographyId
-  // );
 
   const mapLabel = t("Map");
   const withinLabel = t("Within Plan");
@@ -46,7 +44,7 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
 
   return (
     <>
-      <ResultsCard title={t("Habitat")} functionName="windparkCost">
+      <ResultsCard title={t("Windpark Cost")} functionName="windparkCost">
         {(data: ReportResult) => {
           // Single sketch or collection top-level
           const percMetricIdName = `${metricGroup.metricId}Perc`;
@@ -59,109 +57,122 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
             [data.sketch.properties.id]
           );
 
-          const metricIndex = data.metrics.length - 1;
-          const collectionMetrics = data.metrics[data.metrics.length - 1];
+          // get the last metric in the array, which is the collection
+          const collectionIndex = data.metrics.length - 1;
+          const collectionMetrics = data.metrics[collectionIndex];
 
           const meanDepth =
             typeof collectionMetrics.extra?.meanDepth === "number"
-              ? collectionMetrics.extra?.meanDepth.toFixed(0) + "m"
+              ? Math.abs(collectionMetrics.extra?.meanDepth).toFixed(0) + "m"
               : null;
 
           const sketchArea =
             typeof collectionMetrics.extra?.sketchArea === "number"
-              ? (collectionMetrics.extra?.sketchArea / 1e6).toFixed(0) + "km²"
+              ? (collectionMetrics.extra?.sketchArea / 1e6).toFixed(0) + " km²"
               : null;
+
+          const sketchName = data.sketch.properties.name;
+
+          const numberOfTurbines =
+            typeof collectionMetrics.extra?.numberOfTurbines === "number"
+              ? collectionMetrics.extra?.numberOfTurbines.toFixed(0)
+              : null;
+
+          const production =
+            typeof collectionMetrics.extra?.sketchArea === "number"
+              ? ((collectionMetrics.extra?.sketchArea * 3) / 1e6).toFixed(0) +
+                " MW"
+              : null;
+
+          const baseCost =
+            typeof collectionMetrics.extra?.baseCost === "number"
+              ? collectionMetrics.extra?.baseCost.toFixed(0)
+              : null;
+
+          const depthCost =
+            typeof collectionMetrics.extra?.depthCost === "number"
+              ? collectionMetrics.extra?.depthCost.toFixed(0)
+              : null;
+
+          const totalCost = collectionMetrics.value.toFixed(0);
 
           return (
             <>
               <p>
-                <Trans i18nKey="Habitat Card 1">
-                  This report summarizes the proportion of nearshore habitats
-                  within this plan. Plans should consider protection of high
-                  value habitats.
+                <Trans i18nKey="Windpark Overview">
+                  This report summarizes the costs and spatial attrubutes of the
+                  proposed windpark.
                 </Trans>
               </p>
               <KeySection>
-                <b>Total Cost:</b> {data.metrics[metricIndex].value.toFixed(0)}
+                <b>Total Cost:</b> €{totalCost} M
               </KeySection>
-              <KeySection>
-                <b>Mean Depth:</b> {meanDepth}
-              </KeySection>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Area</th>
-                    <th>Number of Turbines</th>
-                    <th>Average Depth</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Windpark</td>
-                    <td>{sketchArea}</td>
-                    <td>
-                      {typeof data.metrics[0].extra?.numberOfTurbines ===
-                      "number"
-                        ? data.metrics[0].extra?.numberOfTurbines.toFixed(0)
-                        : null}
-                    </td>
-                    <td>{meanDepth}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <ClassTable
-                rows={parentMetrics}
-                metricGroup={metricGroup}
-                columnConfig={[
-                  {
-                    columnLabel: " ",
-                    type: "class",
-                    width: 30,
-                  },
-                  {
-                    columnLabel: withinLabel,
-                    type: "metricValue",
-                    metricId: metricGroup.metricId,
-                    valueFormatter: (val: string | number) =>
-                      Math.round(typeof val === "string" ? parseInt(val) : val),
-                    width: 25,
-                  },
-                  {
-                    columnLabel: percValueLabel,
-                    type: "metricChart",
-                    metricId: percMetricIdName,
-                    valueFormatter: "percent",
-                    chartOptions: {
-                      showTitle: true,
-                    },
-                    width: 35,
-                  },
-                  {
-                    columnLabel: mapLabel,
-                    type: "layerToggle",
-                    width: 10,
-                  },
-                ]}
-              />
-              {/* {isCollection && (
-                <Collapse title={t("Show by MPA")}>
-                  {genSketchTable(data, precalcMetrics, metricGroup)}
-                </Collapse>
-              )} */}
+              <p>
+                <br />
+                <Pill color={"#E2E2E2"}>
+                  <b>Overview</b>
+                </Pill>
+              </p>
+              <p>
+                <b>Name</b>: {sketchName}
+              </p>
+              <p>
+                <b>Area</b>: {sketchArea}
+              </p>
+              <p>
+                <b>Number of Turbines</b>: {numberOfTurbines}
+              </p>
+              <p>
+                <b>Average Depth</b>: {meanDepth}
+              </p>
+              <p>
+                <b>Production</b>: {production}
+              </p>
+              <p>
+                <VerticalSpacer height="1rem" />
+                <Pill color={"#E2E2E2"}>
+                  <b>Costs</b>
+                </Pill>
+              </p>
+              <p>
+                <b>Base Cost</b>: €{baseCost} M
+              </p>
+              <p>
+                <b>Depth Cost</b>: €{depthCost} M
+              </p>
 
+              <VerticalSpacer height="0.2rem" />
+              {isCollection && (
+                <Collapse title={t("Show by Zone")}>
+                  <VerticalSpacer height="1rem" />
+                  <WindparkTable data={data}></WindparkTable>
+                </Collapse>
+              )}
               <Collapse title={t("Learn more")}>
-                <Trans i18nKey="Habitat Card - learn more">
-                  <p>🎯 Planning Objective: No specific planning objective.</p>
+                <Trans i18nKey="Windpark - learn more">
                   <p>
-                    🗺️ Source data: Merged 2015 Baldwin and 1998 Folkestone
-                    Study, Baldwin - for PSSEP From BSTP. From CZMU.
+                    ℹ️ This report is part of an Educational Project of Van Hall
+                    Larenstein University.
                   </p>
                   <p>
-                    📈 Report: Percentages are calculated by summing area within
-                    MPAs in this plan, and dividing it by the total area within
-                    the planning area. If the plan includes multiple areas that
-                    overlap, the overlap is only counted once.
+                    🧮 Calculations and assumptions:
+                    <VerticalSpacer height="0.5rem" />
+                    <li>
+                      <b>Base Cost</b>: €7 M per turbine
+                    </li>
+                    <li>
+                      <b>Production</b>: 3 MW per km²
+                    </li>
+                    <li>
+                      <b>Depth Cost</b>:
+                      <ul>
+                        <li>25-29m: Base Cost ÷ 10</li>
+                        <li>30-39m: Base Cost ÷ 5</li>
+                        <li>40-49m: Base Cost ÷ 3⅓</li>
+                        <li>50-59m: Base Cost ÷ 2.5</li>
+                        <li>{">="}60m: base cost ÷ 2</li>
+                      </ul>
+                    </li>
                   </p>
                 </Trans>
               </Collapse>
