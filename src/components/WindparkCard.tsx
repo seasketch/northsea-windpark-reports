@@ -1,25 +1,17 @@
 import React from "react";
 import {
-  ClassTable,
   Collapse,
+  InfoStatus,
   KeySection,
   Pill,
   ResultsCard,
-  SketchClassTable,
-  Table,
   VerticalSpacer,
   useSketchProperties,
 } from "@seasketch/geoprocessing/client-ui";
 import {
   ReportResult,
-  toNullSketchArray,
-  flattenBySketchAllClass,
-  metricsWithSketchId,
   Metric,
-  MetricGroup,
-  toPercentMetric,
   GeogProp,
-  squareMeterToKilometer,
 } from "@seasketch/geoprocessing/client-core";
 import project from "../../project";
 import { Trans, useTranslation } from "react-i18next";
@@ -31,35 +23,13 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
   const [{ isCollection }] = useSketchProperties();
   const { t } = useTranslation();
 
-  const curGeography = project.getGeographyById(props.geographyId, {
-    fallbackGroup: "default-boundary",
-  });
-
-  const metricGroup = project.getMetricGroup("windparkCost", t);
-
-  const mapLabel = t("Map");
-  const withinLabel = t("Within Plan");
-  const percValueLabel = t("% Within Plan");
-  const km2Label = t("km²");
-
   return (
     <>
       <ResultsCard title={t("Windpark Cost")} functionName="windparkCost">
         {(data: ReportResult) => {
-          // Single sketch or collection top-level
-          const percMetricIdName = `${metricGroup.metricId}Perc`;
-          const parentMetrics = metricsWithSketchId(
-            [
-              ...data.metrics.filter(
-                (m) => m.metricId === metricGroup.metricId
-              ),
-            ],
-            [data.sketch.properties.id]
-          );
-
           // get the last metric in the array, which is the collection
           const collectionIndex = data.metrics.length - 1;
-          const collectionMetrics = data.metrics[collectionIndex];
+          const collectionMetrics: Metric = data.metrics[collectionIndex];
 
           const meanDepth =
             typeof collectionMetrics.extra?.meanDepth === "number"
@@ -98,6 +68,13 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
 
           return (
             <>
+              <InfoStatus
+                msg={
+                  <p>
+                    <b>This report is still under development.</b>
+                  </p>
+                }
+              ></InfoStatus>
               <p>
                 <Trans i18nKey="Windpark Overview">
                   This report summarizes the costs and spatial attrubutes of the
@@ -128,12 +105,10 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
               <p>
                 <b>Production</b>: {production}
               </p>
-              <p>
-                <VerticalSpacer height="1rem" />
-                <Pill color={"#E2E2E2"}>
-                  <b>Costs</b>
-                </Pill>
-              </p>
+              <VerticalSpacer height="1rem" />
+              <Pill color={"#E2E2E2"}>
+                <b>Costs</b>
+              </Pill>
               <p>
                 <b>Base Cost</b>: €{baseCost} M
               </p>
@@ -154,26 +129,24 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
                     ℹ️ This report is part of an Educational Project of Van Hall
                     Larenstein University.
                   </p>
-                  <p>
-                    🧮 Calculations and assumptions:
-                    <VerticalSpacer height="0.5rem" />
-                    <li>
-                      <b>Base Cost</b>: €7 M per turbine
-                    </li>
-                    <li>
-                      <b>Production</b>: 3 MW per km²
-                    </li>
-                    <li>
-                      <b>Depth Cost</b>:
-                      <ul>
-                        <li>25-29m: Base Cost ÷ 10</li>
-                        <li>30-39m: Base Cost ÷ 5</li>
-                        <li>40-49m: Base Cost ÷ 3⅓</li>
-                        <li>50-59m: Base Cost ÷ 2.5</li>
-                        <li>{">="}60m: base cost ÷ 2</li>
-                      </ul>
-                    </li>
-                  </p>
+                  🧮 Calculations and assumptions:
+                  <VerticalSpacer height="0.5rem" />
+                  <li>
+                    <b>Base Cost</b>: €7 M per turbine
+                  </li>
+                  <li>
+                    <b>Production</b>: 3 MW per km²
+                  </li>
+                  <li>
+                    <b>Depth Cost</b>:
+                    <ul>
+                      <li>25-29m: Base Cost ÷ 10</li>
+                      <li>30-39m: Base Cost ÷ 5</li>
+                      <li>40-49m: Base Cost ÷ 3⅓</li>
+                      <li>50-59m: Base Cost ÷ 2.5</li>
+                      <li>{">="}60m: base cost ÷ 2</li>
+                    </ul>
+                  </li>
                 </Trans>
               </Collapse>
             </>
@@ -181,27 +154,5 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
         }}
       </ResultsCard>
     </>
-  );
-};
-
-const genSketchTable = (
-  data: ReportResult,
-  precalcMetrics: Metric[],
-  metricGroup: MetricGroup
-) => {
-  const childSketches = toNullSketchArray(data.sketch);
-  const childSketchIds = childSketches.map((sk) => sk.properties.id);
-  const childSketchMetrics = toPercentMetric(
-    metricsWithSketchId(data.metrics, childSketchIds),
-    precalcMetrics
-  );
-  const sketchRows = flattenBySketchAllClass(
-    childSketchMetrics,
-    metricGroup.classes,
-    childSketches
-  );
-
-  return (
-    <SketchClassTable rows={sketchRows} metricGroup={metricGroup} formatPerc />
   );
 };
