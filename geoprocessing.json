@@ -1,11 +1,11 @@
 {
-  "author": "petermenzies <petermenzies@ucsb.edu>",
+  "author": "Peter Menzies <petermenzies@ucsb.edu>",
   "organization": "",
   "region": "us-east-1",
   "clients": [
     {
-      "name": "MpaTabReport",
-      "description": "Report suite for MPA planning within EEZ with tab navigation",
+      "name": "WindparkReport",
+      "description": "Report for windpark proposal project",
       "source": "src/clients/MpaTabReport.tsx"
     },
     {
@@ -20,6 +20,7 @@
     "src/functions/clipToOcean.ts"
   ],
   "geoprocessingFunctions": [
-    "src/functions/boundaryAreaOverlap.ts"
+    "src/functions/boundaryAreaOverlap.ts",
+    "src/functions/windparkCost.ts"
   ]
 }
