@@ -9,7 +9,6 @@ import {
   toNullSketch,
   rekeyMetrics,
   sortMetrics,
-  overlapRaster,
   getCogFilename,
   MultiPolygon,
   getFirstFromParam,
@@ -17,7 +16,7 @@ import {
 import { loadCog } from "@seasketch/geoprocessing/dataproviders";
 import project from "../../project";
 import { clipToGeography } from "../util/clipToGeography";
-import { overlapRasterWindpark } from "../../scripts/overlapRasterWindpark";
+import { overlapWindpark } from "../../scripts/overlapWindpark";
 
 const metricGroup = project.getMetricGroup("windparkCost");
 
@@ -42,7 +41,7 @@ export async function windparkCost(
           project.getInternalRasterDatasourceById(curClass.datasourceId)
         )}`;
         const raster = await loadCog(url);
-        let overlapResult = await overlapRasterWindpark(
+        let overlapResult = await overlapWindpark(
           metricGroup.metricId,
           raster,
           finalSketch

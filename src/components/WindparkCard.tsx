@@ -13,7 +13,6 @@ import {
   Metric,
   GeogProp,
 } from "@seasketch/geoprocessing/client-core";
-import project from "../../project";
 import { Trans, useTranslation } from "react-i18next";
 import { WindparkTable } from "./WindparkTable";
 

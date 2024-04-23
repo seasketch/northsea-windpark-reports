@@ -3,13 +3,13 @@ import {
   SketchCollection,
   Polygon,
   Metric,
-  area,
 } from "@seasketch/geoprocessing";
 import { isSketchCollection } from "@seasketch/geoprocessing";
 import { createMetric } from "@seasketch/geoprocessing";
 import { featureEach } from "@turf/meta";
 import { MultiPolygon } from "@turf/helpers";
 import turfArea from "@turf/area";
+import { getDistanceCost } from "./getDistanceCost";
 
 // @ts-ignore
 import { Georaster, mean } from "geoblaze";
@@ -18,7 +18,7 @@ import { Georaster, mean } from "geoblaze";
  * Returns metrics representing sketch overlap with raster.
  * If sketch collection, then calculate overlap for all child sketches also
  */
-export async function overlapRasterWindpark(
+export async function overlapWindpark(
   /** metricId value to assign to each measurement */
   metricId: string,
   /** Cloud-optimized geotiff to calculate overlap with, loaded via geoblaze.parse() */
@@ -30,15 +30,14 @@ export async function overlapRasterWindpark(
 ): Promise<Metric[]> {
   // Get raster sum for each feature
   const meanPromises: Promise<number[]>[] = [];
-  const meanFeatures: Sketch[] = [];
+  const sketchFeatures: Sketch<Polygon | MultiPolygon>[] = [];
 
   featureEach(sketch, async (feat) => {
     // accumulate geoblaze sum promises and features so we can create metrics later
     meanPromises.push(mean(raster, feat));
-    meanFeatures.push(feat);
+    sketchFeatures.push(feat);
   });
 
-  const bathyPixelArea = 362528.3;
   const turbineCost = 7;
 
   const depthAdjust = (baseCost: number, depth: number) => {
@@ -61,28 +60,36 @@ export async function overlapRasterWindpark(
     }
   };
 
+  const distanceCostPromsises = sketchFeatures.map(async (feature) => {
+    return await getDistanceCost(feature);
+  });
+
+  const distanceCosts = await Promise.all(distanceCostPromsises);
+
   // await results and create metrics
   let sketchMetrics: Metric[] = [];
-  (await Promise.all(meanPromises)).forEach((curMean, index) => {
-    const sketchArea = turfArea(meanFeatures[index]);
+  (await Promise.all(meanPromises)).forEach(async (curMean, index) => {
+    const sketchArea = turfArea(sketchFeatures[index]);
     const meanDepth = curMean[0];
-    const numberOfTurbines = sketchArea / 1200000;
+    const numberOfTurbines = sketchArea / 1890000;
     const baseCost = numberOfTurbines * turbineCost;
     const depthCost = depthAdjust(baseCost, meanDepth);
-    const totalCost = depthCost + baseCost;
+    const distanceCost = distanceCosts[index];
+    const totalCost = depthCost + baseCost + distanceCost;
 
     sketchMetrics.push(
       createMetric({
         metricId,
-        sketchId: meanFeatures[index].properties.id,
+        sketchId: sketchFeatures[index].properties.id,
         value: totalCost,
         extra: {
-          sketchName: meanFeatures[index].properties.name,
+          sketchName: sketchFeatures[index].properties.name,
           sketchArea: sketchArea,
           meanDepth: meanDepth,
           numberOfTurbines: numberOfTurbines,
           baseCost: baseCost,
           depthCost: depthCost,
+          distanceCost: distanceCost,
         },
       })
     );
@@ -92,10 +99,11 @@ export async function overlapRasterWindpark(
     // Push collection with accumulated sumValue
     const meanDepth = (await mean(raster, sketch))[0];
     const sketchArea = turfArea(sketch);
-    const numberOfTurbines = sketchArea / 1200000;
+    const numberOfTurbines = sketchArea / 1890000;
     const baseCost = numberOfTurbines * turbineCost;
     const depthCost = depthAdjust(baseCost, meanDepth);
-    const totalCost = depthCost + baseCost;
+    const distanceCost = await getDistanceCost(sketch);
+    const totalCost = depthCost + baseCost + distanceCost;
     sketchMetrics.push(
       createMetric({
         metricId,
@@ -109,6 +117,7 @@ export async function overlapRasterWindpark(
           numberOfTurbines: numberOfTurbines,
           baseCost: baseCost,
           depthCost: depthCost,
+          distanceCost: distanceCost,
         },
       })
     );

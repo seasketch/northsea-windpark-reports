@@ -160,16 +160,31 @@
     "url": "https://gp-global-datasources-datasets.s3.us-west-1.amazonaws.com/meow-ecos.fgb"
   },
   {
-    "src": "data/src/northsea-bathy.tif",
-    "band": 1,
-    "geo_type": "raster",
     "datasourceId": "bathy",
+    "geo_type": "raster",
     "formats": [
       "tif"
     ],
+    "precalc": false,
+    "measurementType": "quantitative",
+    "band": 1,
     "created": "2023-12-15T22:59:35.056Z",
     "lastUpdated": "2023-12-15T22:59:35.056Z",
-    "measurementType": "quantitative",
+    "src": "data/src/northsea-bathy.tif"
+  },
+  {
+    "src": "data/src/cable-landing-points.fgb",
+    "layerName": "cable-landing-points",
+    "geo_type": "vector",
+    "datasourceId": "cable_landing_points",
+    "formats": [
+      "fgb"
+    ],
+    "classKeys": [],
+    "created": "2024-04-22T22:35:35.864Z",
+    "lastUpdated": "2024-04-22T22:35:35.864Z",
+    "propertiesToKeep": [],
+    "explodeMulti": true,
     "precalc": false
   }
 ]

@@ -6,14 +6,15 @@
       "classId": "cost",
       "sketchId": "23769",
       "groupId": null,
-      "value": 39361.49796239614,
+      "value": 25010.876129931203,
       "extra": {
         "sketchName": "windpark-proposal",
         "sketchArea": 5623071137.485163,
         "meanDepth": -39.16809624619812,
-        "numberOfTurbines": 4685.892614570969,
-        "baseCost": 32801.248301996784,
-        "depthCost": 6560.249660399357
+        "numberOfTurbines": 2975.1699140133137,
+        "baseCost": 20826.189398093196,
+        "depthCost": 4165.237879618639,
+        "distanceCost": 19.44885221936784
       }
     }
   ],

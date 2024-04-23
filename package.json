@@ -49,6 +49,7 @@
     "@turf/bbox": "^6.5.0",
     "@turf/bbox-clip": "^6.5.0",
     "@turf/boolean-valid": "^6.5.0",
+    "@turf/centroid": "^6.5.0",
     "@turf/combine": "^6.5.0",
     "@turf/flatten": "^6.5.0",
     "@turf/invariant": "^6.5.0",
