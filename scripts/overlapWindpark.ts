@@ -38,7 +38,7 @@ export async function overlapWindpark(
     sketchFeatures.push(feat);
   });
 
-  const turbineCost = 7;
+  const turbineCost = 11.9;
 
   const depthAdjust = (baseCost: number, depth: number) => {
     if (25 < Math.abs(depth) && Math.abs(depth) < 30) {
@@ -66,6 +66,8 @@ export async function overlapWindpark(
 
   const distanceCosts = await Promise.all(distanceCostPromsises);
 
+  let depthCostSum = 0;
+
   // await results and create metrics
   let sketchMetrics: Metric[] = [];
   (await Promise.all(meanPromises)).forEach(async (curMean, index) => {
@@ -74,6 +76,7 @@ export async function overlapWindpark(
     const numberOfTurbines = sketchArea / 1890000;
     const baseCost = numberOfTurbines * turbineCost;
     const depthCost = depthAdjust(baseCost, meanDepth);
+    depthCostSum += depthCost;
     const distanceCost = distanceCosts[index];
     const totalCost = depthCost + baseCost + distanceCost;
 
@@ -101,8 +104,8 @@ export async function overlapWindpark(
     const sketchArea = turfArea(sketch);
     const numberOfTurbines = sketchArea / 1890000;
     const baseCost = numberOfTurbines * turbineCost;
-    const depthCost = depthAdjust(baseCost, meanDepth);
-    const distanceCost = await getDistanceCost(sketch);
+    const depthCost = depthCostSum;
+    const distanceCost = distanceCosts.reduce((curValue, sum) => curValue + sum, 0);
     const totalCost = depthCost + baseCost + distanceCost;
     sketchMetrics.push(
       createMetric({

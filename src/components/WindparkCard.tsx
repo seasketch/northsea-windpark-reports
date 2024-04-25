@@ -47,11 +47,11 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
               ? collectionMetrics.extra?.numberOfTurbines.toFixed(0)
               : null;
 
-          const production =
-            typeof collectionMetrics.extra?.sketchArea === "number"
-              ? ((collectionMetrics.extra?.sketchArea * 3) / 1e6).toFixed(0) +
-                " MW"
-              : null;
+          const productionValue = collectionMetrics.extra?.sketchArea as number * 5 / 1e6
+          const production = productionValue.toFixed(0) + " MW"
+
+          const installationCostValue = productionValue * 760 / 1e6
+          const installationCost = "€" + installationCostValue.toFixed(0) + " M"
 
           const baseCost =
             typeof collectionMetrics.extra?.baseCost === "number"
@@ -63,7 +63,12 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
               ? collectionMetrics.extra?.depthCost.toFixed(0)
               : null;
 
-          const totalCost = collectionMetrics.value.toFixed(0);
+          const distanceCost =
+          typeof collectionMetrics.extra?.distanceCost === "number"
+            ? collectionMetrics.extra?.distanceCost.toFixed(0)
+            : null;
+
+          const totalCost = (collectionMetrics.value + installationCostValue).toFixed(0);
 
           return (
             <>
@@ -76,7 +81,7 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
               ></InfoStatus>
               <p>
                 <Trans i18nKey="Windpark Overview">
-                  This report summarizes the costs and spatial attrubutes of the
+                  This report summarizes the costs and spatial attributes of the
                   proposed windpark.
                 </Trans>
               </p>
@@ -99,10 +104,10 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
                 <b>Number of Turbines</b>: {numberOfTurbines}
               </p>
               <p>
-                <b>Average Depth</b>: {meanDepth}
+                <b>Production</b>: {production}
               </p>
               <p>
-                <b>Production</b>: {production}
+                <b>Average Depth</b>: {meanDepth}
               </p>
               <VerticalSpacer height="1rem" />
               <Pill color={"#E2E2E2"}>
@@ -113,6 +118,12 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
               </p>
               <p>
                 <b>Depth Cost</b>: €{depthCost} M
+              </p>
+              <p>
+                <b>Distance Cost</b>: €{distanceCost} M
+              </p>
+              <p>
+                <b>Installation Cost</b>: {installationCost}
               </p>
 
               <VerticalSpacer height="0.2rem" />
@@ -131,10 +142,19 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
                   🧮 Calculations and assumptions:
                   <VerticalSpacer height="0.5rem" />
                   <li>
-                    <b>Base Cost</b>: €7 M per turbine
+                    <b>Number of Turbines</b>: 1.89 per km²
                   </li>
                   <li>
-                    <b>Production</b>: 3 MW per km²
+                    <b>Production</b>: 5 MW per km²
+                  </li>
+                  <li>
+                    <b>Base Cost</b>: €11.9 M per turbine
+                  </li>
+                  <li>
+                    <b>Distance Cost</b>: €160 per m from coast to zone centroid
+                  </li>
+                  <li>
+                    <b>Installation cost</b>: €760 per MW
                   </li>
                   <li>
                     <b>Depth Cost</b>:

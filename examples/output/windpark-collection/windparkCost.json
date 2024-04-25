@@ -6,14 +6,14 @@
       "classId": "cost",
       "sketchId": "23769",
       "groupId": null,
-      "value": 25010.876129931203,
+      "value": 42504.875224329495,
       "extra": {
         "sketchName": "windpark-proposal",
         "sketchArea": 5623071137.485163,
         "meanDepth": -39.16809624619812,
         "numberOfTurbines": 2975.1699140133137,
-        "baseCost": 20826.189398093196,
-        "depthCost": 4165.237879618639,
+        "baseCost": 35404.521976758435,
+        "depthCost": 7080.904395351687,
         "distanceCost": 19.44885221936784
       }
     },
@@ -23,14 +23,14 @@
       "classId": "cost",
       "sketchId": "23770",
       "groupId": null,
-      "value": 9389.494353588289,
+      "value": 15935.336948800461,
       "extra": {
         "sketchName": "windpark-proposal-2",
         "sketchArea": 1942173077.7003145,
         "meanDepth": -46.357552142573304,
         "numberOfTurbines": 1027.6048030160393,
-        "baseCost": 7193.233621112276,
-        "depthCost": 2157.970086333683,
+        "baseCost": 12228.49715589087,
+        "depthCost": 3668.549146767261,
         "distanceCost": 38.29064614233008
       }
     },
@@ -40,16 +40,16 @@
       "classId": "cost",
       "sketchId": "23771",
       "groupId": null,
-      "value": 36454.120247466824,
+      "value": 58440.212173129956,
       "extra": {
         "sketchName": "windpark-collection",
         "isCollection": true,
         "sketchArea": 7565244215.185477,
         "meanDepth": -41.04816672695649,
         "numberOfTurbines": 4002.7747170293533,
-        "baseCost": 28019.423019205475,
-        "depthCost": 8405.826905761644,
-        "distanceCost": 28.870322499704887
+        "baseCost": 47633.01913264931,
+        "depthCost": 10749.453542118947,
+        "distanceCost": 57.739498361697926
       }
     }
   ],
