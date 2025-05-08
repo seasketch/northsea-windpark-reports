@@ -169,22 +169,22 @@
     "measurementType": "quantitative",
     "band": 1,
     "created": "2023-12-15T22:59:35.056Z",
-    "lastUpdated": "2023-12-15T22:59:35.056Z",
+    "lastUpdated": "2025-05-07T19:12:03.546Z",
     "src": "data/src/northsea-bathy.tif"
   },
   {
-    "src": "data/src/cable-landing-points.fgb",
-    "layerName": "cable-landing-points",
-    "geo_type": "vector",
     "datasourceId": "cable_landing_points",
+    "geo_type": "vector",
     "formats": [
       "fgb"
     ],
+    "precalc": false,
+    "layerName": "cable-landing-points",
     "classKeys": [],
     "created": "2024-04-22T22:35:35.864Z",
-    "lastUpdated": "2024-04-22T22:35:35.864Z",
+    "lastUpdated": "2025-05-07T19:12:14.780Z",
+    "src": "data/src/cable-landing-points.fgb",
     "propertiesToKeep": [],
-    "explodeMulti": true,
-    "precalc": false
+    "explodeMulti": true
   }
 ]

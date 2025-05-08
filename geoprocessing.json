@@ -7,11 +7,6 @@
       "name": "WindparkReport",
       "description": "Report for windpark proposal project",
       "source": "src/clients/MpaTabReport.tsx"
-    },
-    {
-      "name": "SizeReport",
-      "description": "Sketch size and % overlap with planning boundaries",
-      "source": "src/clients/SizeReport.tsx"
     }
   ],
   "preprocessingFunctions": [
@@ -20,7 +15,6 @@
     "src/functions/clipToOcean.ts"
   ],
   "geoprocessingFunctions": [
-    "src/functions/boundaryAreaOverlap.ts",
     "src/functions/windparkCost.ts"
   ]
 }

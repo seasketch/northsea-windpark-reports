@@ -15,7 +15,6 @@ import {
 } from "@seasketch/geoprocessing";
 import { loadCog } from "@seasketch/geoprocessing/dataproviders";
 import project from "../../project";
-import { clipToGeography } from "../util/clipToGeography";
 import { overlapWindpark } from "../../scripts/overlapWindpark";
 
 const metricGroup = project.getMetricGroup("windparkCost");
@@ -31,7 +30,7 @@ export async function windparkCost(
     fallbackGroup: "default-boundary",
   });
 
-  const finalSketch = await clipToGeography(sketch, curGeography);
+  const finalSketch = sketch;
   const metrics: Metric[] = (
     await Promise.all(
       metricGroup.classes.map(async (curClass) => {
