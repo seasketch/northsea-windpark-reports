@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Collapse,
-  InfoStatus,
   KeySection,
   Pill,
   ResultsCard,
@@ -15,6 +14,7 @@ import {
 } from "@seasketch/geoprocessing/client-core";
 import { Trans, useTranslation } from "react-i18next";
 import { WindparkTable } from "./WindparkTable";
+import { InfoStatus } from "../util/InfoStatusCentered";
 
 const Number = new Intl.NumberFormat("en", { style: "decimal" });
 
@@ -72,7 +72,7 @@ export const WindparkCard: React.FunctionComponent<GeogProp> = (props) => {
 
           return (
             <>
-              <InfoStatus
+              <InfoStatus 
                 msg={
                   <p>
                     <b>This report is still under development.</b>
